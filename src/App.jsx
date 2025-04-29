@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Header from './components/Header'
+import Trades from './components/Trades'
 import './App.css'
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     <>
       <div>
       <Header />
+      <Trades />
       </div>
      
     </>
