@@ -9,35 +9,38 @@ const Trades = ()=> {
     const [be, setBe] = useState(39)
     const [win, setWin] = useState(21)
 
+    const [percent, setPerecent] = useState(rsecured * 0.5)
+    const [pnl, setPnl] = useState(100000)
+
     const [content, setContent] = useState([
       {
         //id: uuid(),
-        img: "/img/01.jpg",
+        img: "/img/87.png",
         asset: 'OIL',
         result: '-0.4'
       },
       {
         
         //id: uuid(),
-        img: "/img/01.jpg",
+        img: "/img/86.png",
         asset: 'USDJPY',
         result: '+3'
       },
       {
         //id: uuid(),
-        img: "/img/01.jpg",
+        img: "/img/85.png",
         asset: 'GER40',
         result: '-1'
       },
         {
           //id: uuid(),
-          img: "/img/01.jpg",
+          img: "/img/84.png",
           asset: 'GBPCAD',
           result: '-1'
         },
         {
           //id: uuid(),
-          img: '/img/02.jpg',
+          img: '/img/83.png',
           asset: 'COPPER',
           result: '-1'
         }
@@ -47,14 +50,18 @@ const Trades = ()=> {
     return(
         <>
         <h2>Number of trades: {tradecount}</h2>
-        <h3>R Secured: {rsecured}</h3>
+        <h3>R Secured: {rsecured} R</h3>
         <h3>Win: {win} - Be: {be} - Loss: {loss}</h3>
-        <h4>PnL: {rsecured * 0.5}%</h4>
+        <h4>PnL: {rsecured * 0.5}%
+          <p>{pnl * (percent / 100) +pnl} $</p>
+       </h4>
+        
         <p>Latest trades:</p>
         {/* mapping over our 'db' here */}
         {content.map(itm=> (
             <div>
-               {itm.asset} {itm.result}
+               <p>{itm.asset} {itm.result}</p>
+               <p><img src={itm.img} className='card'/></p>
             </div>
           ))}
         </>

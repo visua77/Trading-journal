@@ -29,6 +29,21 @@ p {
   border-bottom: 1px solid rgb(71, 71, 71);
 }
 
+img {border-radius: 8px;}
+
+
+
+.card {
+  width:400px;
+  height:250px;
+  background-color:white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+  margin:1rem;
+  padding:1rem;
+  color:rgb(77, 77, 77);
+  border-radius: 8px;
+}
+
 
 
 
