@@ -1,5 +1,7 @@
 import React,{useState} from 'react'
-//import { v4 as uuid} from 'uuid'
+import data from '../data/data.json' // justera sökvägen efter var filen ligger
+
+import { v4 as uuidv4 } from 'uuid'
 
 const Trades = ()=> {
 
@@ -12,39 +14,7 @@ const Trades = ()=> {
     const [percent, setPerecent] = useState(rsecured * 0.5)
     const [pnl, setPnl] = useState(100000)
 
-    const [content, setContent] = useState([
-      {
-        //id: uuid(),
-        img: "/img/87.png",
-        asset: 'OIL',
-        result: '-0.4'
-      },
-      {
-        
-        //id: uuid(),
-        img: "/img/86.png",
-        asset: 'USDJPY',
-        result: '+3'
-      },
-      {
-        //id: uuid(),
-        img: "/img/85.png",
-        asset: 'GER40',
-        result: '-1'
-      },
-        {
-          //id: uuid(),
-          img: "/img/84.png",
-          asset: 'GBPCAD',
-          result: '-1'
-        },
-        {
-          //id: uuid(),
-          img: '/img/83.png',
-          asset: 'COPPER',
-          result: '-1'
-        }
-      ]) 
+    const [content, setContent] = useState(data) 
 
 
     return(
@@ -56,12 +26,15 @@ const Trades = ()=> {
           <p>{pnl * (percent / 100) +pnl} $</p>
        </h4>
         
+
+
+        
         <p>Latest trades:</p>
         {/* mapping over our 'db' here */}
-        {content.map(itm=> (
-            <div>
+        {content.slice(-5).reverse().map(itm=> (
+            <div key={uuidv4()}>
                <p>{itm.asset} {itm.result}</p>
-               <p><img src={itm.img} className='card'/></p>
+               <p className='card'><img src={itm.img}/></p>
             </div>
           ))}
         </>

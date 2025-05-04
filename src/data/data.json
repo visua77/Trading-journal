@@ -1,0 +1,33 @@
+[
+{
+    
+    "img": "/img/87.png",
+    "asset": "OIL",
+    "result": "-0.4"
+  },
+  {
+    
+    
+    "img": "/img/86.png",
+    "asset": "USDJPY",
+    "result": "+3"
+  },
+  {
+    
+    "img": "/img/85.png",
+    "asset": "GER40",
+    "result": "-1"
+  },
+    {
+      
+      "img": "/img/84.png",
+      "asset": "GBPCAD",
+      "result": "-1"
+    },
+    {
+      
+      "img": "/img/83.png",
+      "asset": "COPPER",
+      "result": "-1"
+    }
+]
