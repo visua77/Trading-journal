@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import data from '../data/data.json' // justera sökvägen efter var filen ligger
 
 import { v4 as uuidv4 } from 'uuid'
@@ -14,7 +14,61 @@ const Trades = ()=> {
     const [percent, setPerecent] = useState(rsecured * 0.5)
     const [pnl, setPnl] = useState(100000)
 
-    const [content, setContent] = useState(data) 
+    const [form, setForm] = useState({
+      img: '',
+      asset: '',
+      result: ''
+    })
+
+    
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+      console.log('Formen har uppdaterats:', form)
+    }, [form])
+
+
+
+    //const [content, setContent] = useState( []) 
+
+    const [content, setContent] = useState(() => {
+      const saved = localStorage.getItem('myContent')
+      return saved ? JSON.parse(saved) : []
+    })
+
+    useEffect(() => {
+      localStorage.setItem('myContent', JSON.stringify(content))
+    }, [content])
+
+    
+    const handleChange = (e) => {
+      const { name, value} = e.target
+      setForm(prev => ({
+        ...prev, 
+        [name]: name === 'asset' ? value.toUpperCase() : value
+      }))
+    }
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      
+      if (!form.img || !form.asset || !form.result) {
+        setError('Hallå! Du måste fylla i alla fält 🙃')
+        return
+      }
+
+      if (form.img && form.asset && form.result) {
+        const newItem = {
+          id: uuidv4(),
+          img: form.img,
+          asset: form.asset,
+          result: form.result
+        }
+        setContent(prev => [...prev, newItem])
+        setForm({ img: '', asset: '', result: '' }) // reset form
+        setError('') // rensa ev. gamla fel
+      }
+    }
 
 
     return(
@@ -25,16 +79,41 @@ const Trades = ()=> {
         <h4>PnL: {rsecured * 0.5}%
           <p>{pnl * (percent / 100) +pnl} $</p>
        </h4>
+
+       <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="asset"
+          placeholder="Asset"
+          value={form.asset}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="result"
+          placeholder="Result"
+          value={form.result}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="img"
+          placeholder="Bild-URL /img/91.png"
+          value={form.img}
+          onChange={handleChange}
+        />
+        <button type="submit">Lägg till</button>
+      </form>
+
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         
 
-
-        
         <p>Latest trades:</p>
         {/* mapping over our 'db' here */}
         {content.slice(-5).reverse().map(itm=> (
-            <div key={uuidv4()}>
+            <div key={itm.id}>
                <p>{itm.asset} {itm.result}</p>
-               <p className='card'><img src={itm.img}/></p>
+               <p className='card'><img src={itm.img} onMouseOver={()=> console.log(itm.id)}/></p>
             </div>
           ))}
         </>
