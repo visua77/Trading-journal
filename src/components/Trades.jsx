@@ -29,7 +29,8 @@ const Trades = ()=> {
     const [error, setError] = useState('')
     const [tradesToShow, setTradesToShow] = useState(5)
     
-    const [selectedTrade, setSelectedTrade] = useState(null);
+    const [selectedTrade, setSelectedTrade] = useState(null)
+
 
 
 
@@ -38,7 +39,33 @@ const Trades = ()=> {
       return saved ? JSON.parse(saved) : []
     })
 
-    // ⏺ Spara till localStorage varje gång content uppdateras
+    useEffect(() => {
+      updateStats(trades)
+    }, [trades])
+
+    // ⏺ Uppdatera trading-stats dynamiskt
+
+
+    const updateStats = (allTrades) => {
+      const total = tradecount + allTrades.length
+      const wins = win + allTrades.filter(t => t.result.toLowerCase() === 'win').length
+      const losses = loss + allTrades.filter(t => t.result.toLowerCase() === 'loss').length
+      const breakevens = be + allTrades.filter(t => t.result.toLowerCase() === 'be').length
+    
+      setTradecount(total)
+      setWin(wins)
+      setLoss(losses)
+      setBe(breakevens)
+    
+      const r = rsecured + allTrades.reduce((sum, t) => {
+        const parsed = parseFloat(t.result)
+        return isNaN(parsed) ? sum : sum + parsed
+      }, 0)
+    
+      setRsecured(r)
+      setPerecent(r * 0.5)
+      setPnl(100000 + (r * 0.5 * 100000 / 100))
+    }
 
 
      // 🔁 Hantera input
@@ -90,13 +117,6 @@ const Trades = ()=> {
         setError('') // rensa ev. gamla fel
       
     }
-
-    const addTrade = (newTrade) => {
-      const updatedTrades = [...trades, newTrade];
-      setTrades(updatedTrades);
-      localStorage.setItem('trades', JSON.stringify(updatedTrades));
-      //updateStats(updatedTrades); // ny funktion för statistik
-    };
 
 
     return(
