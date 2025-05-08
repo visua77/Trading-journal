@@ -1,15 +1,13 @@
-import { useState } from 'react'
 import Header from './components/Header'
 import Trades from './components/Trades'
 import Footer from './components/Footer'
 import './App.css'
 
 function App() {
-  //const [count, setCount] = useState(0)
-
+  
   return (
     <>
-      <div>
+      <div className="max-w-3xl mx-auto p-6">
       <Header />
       <Trades />
       <Footer />
